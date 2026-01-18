@@ -53,7 +53,14 @@ speed_connection_europe/
 │   ├── population/          # Eurostat Census data
 │   ├── health/              # Healthcare accessibility raster
 │   ├── internet/            # Ookla speed test data
+│   ├── statistical_units/   # NUTS boundaries (2024)
 │   └── data_h3_res8.parquet # Final output
+├── analysis/                # NUTS analysis pipeline (NEW!)
+│   ├── scripts/             # 5-step analysis workflow
+│   ├── figures/             # Publication-ready maps & charts
+│   ├── run_analysis.py      # Run complete analysis
+│   ├── metadata.md          # Methodology documentation
+│   └── european_analysis_results.xlsx # Final Excel report
 ├── matrix/
 │   ├── outputs/             # Precomputed weight matrices
 │   ├── grid_h3_matrix.py    # Population matrix generation
@@ -127,6 +134,29 @@ df.group_by('health_distance').agg([
 - **Fast Processing**: Precomputed matrices enable <5 min incremental updates
 - **Memory Efficient**: Polars-based pipeline handles large datasets (24M+ hexagons)
 - **Reproducible**: All code and data sources publicly available
+- **NUTS Analysis**: Comprehensive regional analysis with publication-ready outputs
+
+## NUTS Regional Analysis
+
+**NEW!** Comprehensive analysis of connectivity and healthcare accessibility across European NUTS regions.
+
+```bash
+cd analysis
+python3 run_analysis.py
+```
+
+**Outputs**:
+- **Excel Report**: Single file with 13 sheets (connectivity, healthcare, demographics)
+- **Maps**: Publication-ready choropleth maps (300 DPI PNG)
+- **Charts**: Statistical visualizations for all metrics
+
+**Analysis includes**:
+- Internet connectivity by speed tier (disconnected, <10 Mbps, 10-25 Mbps, 25-100 Mbps, ≥100 Mbps)
+- Healthcare accessibility by travel time (<5, 5-10, 10-15, 15-30, >30 minutes)
+- Demographics of underserved vs. well-connected populations
+- Aggregation at all NUTS levels (0=countries, 1=major regions, 2=basic regions, 3=small regions)
+
+See [`analysis/README.md`](analysis/README.md) for details.
 
 ## Requirements
 
